@@ -27,11 +27,11 @@
                     <div class="form-group mb-3">
                         <label asp-for="Price" class="form-label">Price</label>
                         <div class="input-group">
-                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">R</span>
                             <input asp-for="Price" name="Price" class="form-control" type="text" placeholder="29.99" required />
                         </div>
                         <span asp-validation-for="Price" class="text-danger"></span>
-                        <div class="form-text">Enter price in dollars (e.g., 29.99) - Required field</div>
+                        <div class="form-text">Enter price in ZAR (e.g., 29.99) - Required field</div>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -71,7 +71,7 @@
                 <ul class="small">
                     <li>Product Name</li>
                     <li>Description</li>
-                    <li>Price (must be greater than $0.00)</li>
+                    <li>Price (must be greater than R0.00)</li>
                     <li>Stock Quantity</li>
                 </ul>
 
@@ -130,7 +130,7 @@
             if (value) {
                 const price = parseFloat(value);
                 if (isNaN(price) || price <= 0) {
-                    if (errorSpan) errorSpan.textContent = 'Please enter a valid price greater than $0.00';
+                    if (errorSpan) errorSpan.textContent = 'Please enter a valid price greater than R0.00';
                     e.target.style.borderColor = '#dc3545';
                 } else {
                     if (errorSpan) errorSpan.textContent = '';

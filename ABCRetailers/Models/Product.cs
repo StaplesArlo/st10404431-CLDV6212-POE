@@ -15,7 +15,7 @@ namespace ABCRetailers.Models
         public string ProductID => RowKey;
 
         [Required]
-        [Display(Name = "Product Name")]
+        [Display(Name = "Name")]
         public string ProductName { get; set; } = string.Empty;
 
         [Required]
@@ -34,10 +34,10 @@ namespace ABCRetailers.Models
         }
 
         [Required]
-        [Display(Name = "Stock Available")]
+        [Display(Name = "Stock")]
         public int Stock{ get; set; }
 
-        [Display(Name = "Image URL")]
+        [Display(Name = "Image")]
         public string ImageUrl { get; set; } = string.Empty;
     }
 }

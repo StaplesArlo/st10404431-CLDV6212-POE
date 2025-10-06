@@ -15,13 +15,13 @@ namespace ABCRetailers.Controllers
             _storageService = storageService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index_Order()
         {
             var orders = await _storageService.GetAllEntitiesAsync<Order>();
             return View(orders);
         }
 
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> NewOrder()
         {
             var customers = await _storageService.GetAllEntitiesAsync<Customer>();
             var products = await _storageService.GetAllEntitiesAsync<Product>();
@@ -37,14 +37,14 @@ namespace ABCRetailers.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(OrderCreateViewModel model)
+        public async Task<IActionResult> NewOrder(OrderCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var customer = await _storageService.GetEntityAsync<Customer>("Customer", model.CustomerId);
-                    var product = await _storageService.GetEntityAsync<Product>("Product", model.ProductId);
+                    var customer = await _storageService.GetEntityAsync<Customer>("Customer", model.CustomerID);
+                    var product = await _storageService.GetEntityAsync<Product>("Product", model.ProductID);
 
                     if (customer == null || product == null)
                     {
@@ -62,9 +62,9 @@ namespace ABCRetailers.Controllers
 
                     var order = new Order
                     {
-                        CustomerID = model.CustomerId,
+                        CustomerID = model.CustomerID,
                         Username = customer.Username,
-                        ProductID = model.ProductId,
+                        ProductID = model.ProductID,
                         ProductName = product.ProductName,
                         OrderDate = model.OrderDate,
                         Quantity = model.Quantity,
@@ -103,7 +103,7 @@ namespace ABCRetailers.Controllers
                     await _storageService.SendMessageAsync("stock-updates", JsonSerializer.Serialize(stockMessage));
 
                     TempData["Success"] = "Order created successfully!";
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index_Order));
                 }
                 catch (Exception ex)
                 {
@@ -125,7 +125,7 @@ namespace ABCRetailers.Controllers
             return View(order);
         }
 
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> UpdateOrder(string id)
         {
             if (string.IsNullOrEmpty(id)) return NotFound();
             var order = await _storageService.GetEntityAsync<Order>("Order", id);
@@ -135,7 +135,7 @@ namespace ABCRetailers.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Order order)
+        public async Task<IActionResult> UpdateOrder(Order order)
         {
             if (ModelState.IsValid)
             {
@@ -143,7 +143,7 @@ namespace ABCRetailers.Controllers
                 {
                     await _storageService.UpdateEntityAsync(order);
                     TempData["Success"] = "Order updated successfully!";
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index_Order));
                 }
                 catch (Exception ex)
                 {
@@ -154,7 +154,7 @@ namespace ABCRetailers.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> CancelOrder(string id)
         {
             try
             {
@@ -165,7 +165,7 @@ namespace ABCRetailers.Controllers
             {
                 TempData["Error"] = $"Error deleting order: {ex.Message}";
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index_Order));
         }
 
         [HttpGet]

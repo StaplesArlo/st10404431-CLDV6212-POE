@@ -13,14 +13,14 @@ namespace ABCRetailers.Controllers
             _storageService = storageService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index_Upload()
         {
             return View(new FileUploadModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(FileUploadModel model)
+        public async Task<IActionResult> Index_Upload(FileUploadModel model)
         {
             if (ModelState.IsValid)
             {

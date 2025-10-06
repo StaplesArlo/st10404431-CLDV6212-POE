@@ -5,6 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAzureStorageService, AzureStorageService>();
+builder.Services.AddHttpClient<IFunctionsApi, FunctionsApiClient>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["FunctionsBaseUrl"]);
+});
 
 // Configure logging
 builder.Logging.ClearProviders();

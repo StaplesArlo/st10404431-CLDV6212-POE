@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E8CE586D-F18C-4DD1-AC77-FA23ACBB8A6D}|ABCRetailers.csproj|c:\\users\\arlo\\onedrive - advtech ltd\\documents\\cldv6212\\abcretailers\\services\\ifunctionsapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E8CE586D-F18C-4DD1-AC77-FA23ACBB8A6D}|ABCRetailers.csproj|solutionrelative:services\\ifunctionsapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E8CE586D-F18C-4DD1-AC77-FA23ACBB8A6D}|ABCRetailers.csproj|c:\\users\\arlo\\onedrive - advtech ltd\\documents\\cldv6212\\abcretailers\\services\\functionsapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E8CE586D-F18C-4DD1-AC77-FA23ACBB8A6D}|ABCRetailers.csproj|solutionrelative:services\\functionsapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E8CE586D-F18C-4DD1-AC77-FA23ACBB8A6D}|ABCRetailers.csproj|c:\\users\\arlo\\onedrive - advtech ltd\\documents\\cldv6212\\abcretailers\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E8CE586D-F18C-4DD1-AC77-FA23ACBB8A6D}|ABCRetailers.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E8CE586D-F18C-4DD1-AC77-FA23ACBB8A6D}|ABCRetailers.csproj|c:\\users\\arlo\\onedrive - advtech ltd\\documents\\cldv6212\\abcretailers\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{E8CE586D-F18C-4DD1-AC77-FA23ACBB8A6D}|ABCRetailers.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E8CE586D-F18C-4DD1-AC77-FA23ACBB8A6D}|ABCRetailers.csproj|c:\\users\\arlo\\onedrive - advtech ltd\\documents\\cldv6212\\abcretailers\\services\\azurestorageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E8CE586D-F18C-4DD1-AC77-FA23ACBB8A6D}|ABCRetailers.csproj|solutionrelative:services\\azurestorageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -24,19 +24,6 @@
           "DockedWidth": 200,
           "SelectedChildIndex": 4,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AzureStorageService.cs",
-              "DocumentMoniker": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\Services\\AzureStorageService.cs",
-              "RelativeDocumentMoniker": "Services\\AzureStorageService.cs",
-              "ToolTip": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\Services\\AzureStorageService.cs",
-              "RelativeToolTip": "Services\\AzureStorageService.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T11:32:42.565Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
@@ -51,28 +38,40 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAQwBQAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T11:31:42.286Z",
+              "WhenOpened": "2025-10-06T20:23:32.471Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IFunctionsApi.cs",
+              "DocumentMoniker": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\Services\\IFunctionsApi.cs",
+              "RelativeDocumentMoniker": "Services\\IFunctionsApi.cs",
+              "ToolTip": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\Services\\IFunctionsApi.cs",
+              "RelativeToolTip": "Services\\IFunctionsApi.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T19:43:21.71Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-06T11:28:22.8Z",
+              "Title": "FunctionsApiClient.cs",
+              "DocumentMoniker": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\Services\\FunctionsApiClient.cs",
+              "RelativeDocumentMoniker": "Services\\FunctionsApiClient.cs",
+              "ToolTip": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\Services\\FunctionsApiClient.cs",
+              "RelativeToolTip": "Services\\FunctionsApiClient.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAiwDkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T19:29:29.579Z",
               "EditorCaption": ""
             }
           ]

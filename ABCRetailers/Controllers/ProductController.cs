@@ -49,7 +49,7 @@ namespace ABCRetailers.Controllers
                 {
                     if (product.Price <= 0)
                     {
-                        ModelState.AddModelError("Price", "Price must be greater than $0.00");
+                        ModelState.AddModelError("Price", "Price must be greater than R0.00");
                         return View(product);
                     }
 
@@ -61,7 +61,7 @@ namespace ABCRetailers.Controllers
 
                     await _storageService.AddEntityAsync(product);
                     TempData["Success"] = $"Product '{product.ProductName}' created successfully with price {product.Price:C}!";
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index_Product));
                 }
                 catch (Exception ex)
                 {
@@ -73,7 +73,7 @@ namespace ABCRetailers.Controllers
             return View(product);
         }
 
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> UpdateProduct(string id)
         {
             if (string.IsNullOrEmpty(id)) return NotFound();
             var product = await _storageService.GetEntityAsync<Product>("Product", id);
@@ -83,30 +83,65 @@ namespace ABCRetailers.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Product product, IFormFile? imageFile)
+        public async Task<IActionResult> UpdateProduct(Product product, IFormFile? imageFile)
         {
+            if (Request.Form.TryGetValue("Price", out var priceFormValue))
+            {
+                if (decimal.TryParse(priceFormValue, out var parsedPrice))
+                {
+                    product.Price = parsedPrice;
+                    _logger.LogInformation("Edit: Successfully parsed price: {Price}", parsedPrice);
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var originalProduct = await _storageService.GetEntityAsync<Product>("Product", product.RowKey);
+                    if (originalProduct == null)
+                    {
+                        return NotFound();
+                    }
+
+                    originalProduct.ProductName = product.ProductName;
+                    originalProduct.Description = product.Description;
+                    originalProduct.Price = product.Price;
+                    originalProduct.Stock = product.Stock;
+
                     if (imageFile != null && imageFile.Length > 0)
                     {
                         var imageUrl = await _storageService.UploadImageAsync(imageFile, "product-images");
-                        product.ImageUrl = imageUrl;
+                        originalProduct.ImageUrl = imageUrl;
                     }
 
-                    await _storageService.UpdateEntityAsync(product);
-                    TempData["Success"] = $"Product '{product.ProductName}' updated successfully!";
+                    await _storageService.UpdateEntityAsync(originalProduct);
+                    TempData["Success"] = "Product updated successfully!";
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Error updating product");
+                    _logger.LogError(ex, "Error updating product: {Message}", ex.Message);
                     ModelState.AddModelError("", $"Error updating product: {ex.Message}");
                 }
             }
 
             return View(product);
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveProduct(string id)
+        {
+            try
+            {
+                await _storageService.DeleteEntityAsync<Product>("Product", id);
+                TempData["Success"] = "Product deleted successfully!";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error deleting product: {ex.Message}";
+            }
+
+            return RedirectToAction(nameof(Index_Product));
         }
     }
 }
