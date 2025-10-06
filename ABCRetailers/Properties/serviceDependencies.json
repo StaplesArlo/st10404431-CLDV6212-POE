@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets"
+    },
+    "storage1": {
+      "ignored": "true",
+      "type": "storage",
+      "connectionId": "Logging:AzureStorage:ConnectionString"
+    },
+    "compute.appService1": {
+      "group": "connections",
+      "type": "compute.appService"
+    }
+  }
+}
