@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ou3OKLPp71E=",
+  "dgSpecHash": "CuvC00dd/wY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\ABCRetailers.csproj",
+  "projectFilePath": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ST10404431-CLDV6212-POE\\ABCRetailers\\ABCRetailers.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Arlo\\.nuget\\packages\\azure.core\\1.44.1\\azure.core.1.44.1.nupkg.sha512",
     "C:\\Users\\Arlo\\.nuget\\packages\\azure.data.tables\\12.11.0\\azure.data.tables.12.11.0.nupkg.sha512",

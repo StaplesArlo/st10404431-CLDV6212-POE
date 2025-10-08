@@ -1,8 +1,11 @@
-﻿@model IEnumerable<ABCRetailers.Models.Order>
+﻿@using ABCRetailers.Models
+@model IEnumerable<ABCRetailers.Models.Order>
+
 
 @{
     ViewData["Title"] = "Orders";
 }
+
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="fas fa-shopping-cart"></i> Orders</h2>
     <a asp-action="NewOrder" class="btn btn-primary">
@@ -33,7 +36,7 @@
                         <td><code>@order.OrderID.Substring(0, 8)...</code></td>
                         <td>@order.Username</td>
                         <td>@order.ProductName</td>
-                        <td>@order.OrderDate.ToString("MMM dd, yyyy")</td>
+                        <td>@order.OrderDate.ToString()</td>
                         <td>@order.Quantity</td>
                         <td>@order.TotalPrice.ToString("C")</td>
                         <td>
@@ -50,15 +53,14 @@
                                     <i class="fas fa-edit"></i>
                                 </a>
 
-                                <!-- Status Update Dropdown -->
-                                @if (order.Status != "Completed" && order.Status != "Cancelled")
+                                @if (order.Status != OrderStatus.Completed && order.Status != OrderStatus.Cancelled)
                                 {
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn btn-sm btn-outline-warning dropdown-toggle" data-bs-toggle="dropdown" title="Update Status">
                                             <i class="fas fa-sync-alt"></i>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            @if (order.Status == "Submitted")
+                                            @if (order.Status == OrderStatus.Submitted)
                                             {
                                                 <li>
                                                     <a class="dropdown-item" href="#" onclick="updateOrderStatus('@order.RowKey', 'Processing')">
@@ -66,7 +68,7 @@
                                                     </a>
                                                 </li>
                                             }
-                                            @if (order.Status == "Processing")
+                                            @if (order.Status == OrderStatus.Processing)
                                             {
                                                 <li>
                                                     <a class="dropdown-item" href="#" onclick="updateOrderStatus('@order.RowKey', 'Completed')">
@@ -123,8 +125,11 @@ else
     </div>
 </div>
 
-@{
-    string GetStatusBadgeClass(string status) => status?.ToLower() switch
+@functions {
+    string FormatLocal(DateTimeOffset? dto)
+        => dto.HasValue ? dto.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm") : "-";
+   
+    string GetStatusBadgeClass(OrderStatus status) => status.ToString().ToLower() switch
     {
         "submitted" => "primary",
         "processing" => "info",
@@ -133,40 +138,38 @@ else
         _ => "secondary"
     };
 }
+<!-- hidden antiforgery token for AJAX -->
+<form id="__af" method="post" style="display:none">
+    @Html.AntiForgeryToken()
+</form>
 
 @section Scripts {
     <script>
-        function confirmDelete(orderRowKey, orderId) {
-            document.getElementById('orderId').textContent = orderId.substring(0, 8) + '...';
-            document.getElementById('deleteForm').action = '/Order/Delete/' + orderRowKey;
+        function confirmDelete(orderIdFull, orderIdForDisplay) {
+            const shortId = (orderIdForDisplay && orderIdForDisplay.length > 8) ? orderIdForDisplay.substring(0,8) + '…' : orderIdForDisplay;
+            document.getElementById('orderId').textContent = shortId;
+            document.getElementById('deleteForm').action = '@Url.Action("Delete", "Order")/' + encodeURIComponent(orderIdFull);
             new bootstrap.Modal(document.getElementById('deleteModal')).show();
         }
 
-        function updateOrderStatus(orderRowKey, newStatus) {
-            if (confirm(`Are you sure you want to change the status to "${newStatus}"?`)) {
-                fetch('/Order/UpdateOrderStatus', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        id: orderRowKey,
-                        newStatus: newStatus
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Status updated successfully!');
-                        location.reload();
-                    } else {
-                        alert('Error: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    alert('An error occurred while updating the status');
-                });
-            }
+        // post as x-www-form-urlencoded so MVC binds (id, newStatus)
+        function updateOrderStatus(orderId, newStatus) {
+            if (!confirm(`Are you sure you want to change the status to "${newStatus}"?`)) return;
+
+            const token = document.querySelector('#__af input[name="__RequestVerificationToken"]').value;
+            const body  = new URLSearchParams({ id: orderId, newStatus: newStatus, __RequestVerificationToken: token });
+
+            fetch('@Url.Action("UpdateOrderStatus", "Order")', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                body
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data && data.success) location.reload();
+                else alert('Error: ' + (data && data.message ? data.message : 'Unknown error'));
+            })
+            .catch(() => alert('An error occurred while updating the status'));
         }
     </script>
 }

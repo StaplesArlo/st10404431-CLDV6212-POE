@@ -1,14 +1,23 @@
 ﻿using ABCRetailers.Services;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAzureStorageService, AzureStorageService>();
-builder.Services.AddHttpClient<IFunctionsApi, FunctionsApiClient>(client =>
+
+// Typed HttpClient for your Azure Functions
+builder.Services.AddHttpClient("Functions", (sp, client) =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["FunctionsBaseUrl"]);
+var cfg = sp.GetRequiredService<IConfiguration>();
+var baseUrl = cfg["Functions:BaseUrl"] ?? throw new InvalidOperationException("Functions:BaseUrl missing");
+client.BaseAddress = new Uri(baseUrl.TrimEnd('/') + "/api/"); // adjust if your Functions don't use /api
+client.Timeout = TimeSpan.FromSeconds(100);
 });
+
+// Use the typed client (replaces IAzureStorageService everywhere)
+builder.Services.AddScoped<IFunctionsApi, FunctionsApiClient>();
 
 // Configure logging
 builder.Logging.ClearProviders();

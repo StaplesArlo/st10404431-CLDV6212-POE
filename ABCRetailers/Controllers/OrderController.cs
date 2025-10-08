@@ -8,17 +8,20 @@ namespace ABCRetailers.Controllers
 {
     public class OrderController : Controller
     {
+        private readonly IFunctionsApi _api;
         private readonly IAzureStorageService _storageService;
 
-        public OrderController(IAzureStorageService storageService)
+        public OrderController(IFunctionsApi api, IAzureStorageService storageService)
         {
-            _storageService = storageService;
+            _api = api ?? throw new ArgumentNullException(nameof(api));
+            _storageService = storageService ?? throw new ArgumentNullException(nameof(storageService));
         }
+
 
         public async Task<IActionResult> Index_Order()
         {
-            var orders = await _storageService.GetAllEntitiesAsync<Order>();
-            return View(orders);
+            var orders = await _api.GetOrdersAsync();
+            return View(orders.OrderByDescending(o => o.OrderDate).ToList());
         }
 
         public async Task<IActionResult> NewOrder()
@@ -70,7 +73,7 @@ namespace ABCRetailers.Controllers
                         Quantity = model.Quantity,
                         UnitPrice = product.Price,
                         TotalPrice = product.Price * model.Quantity,
-                        Status = "Submitted"
+                        Status = OrderStatus.Submitted,
                     };
 
                     await _storageService.AddEntityAsync(order);
@@ -135,22 +138,17 @@ namespace ABCRetailers.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateOrder(Order order)
+        public async Task<IActionResult> UpdateOrderStatus(string id, string newStatus)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    await _storageService.UpdateEntityAsync(order);
-                    TempData["Success"] = "Order updated successfully!";
-                    return RedirectToAction(nameof(Index_Order));
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", $"Error updating order: {ex.Message}");
-                }
+                await _api.UpdateOrderStatusAsync(id, newStatus);
+                return Json(new { success = true, message = $"Order status updated to {newStatus}" });
             }
-            return View(order);
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
         }
 
         [HttpPost]
@@ -189,39 +187,7 @@ namespace ABCRetailers.Controllers
             return Json(new { success = false });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateOrderStatus(string id, string newStatus)
-        {
-            try
-            {
-                var order = await _storageService.GetEntityAsync<Order>("Order", id);
-                if (order == null)
-                    return Json(new { success = false, message = "Order not found" });
-
-                var previousStatus = order.Status;
-                order.Status = newStatus;
-                await _storageService.UpdateEntityAsync(order);
-
-                var statusMessage = new
-                {
-                    order.OrderID,
-                    order.CustomerID,
-                    CustomerName = order.Username,
-                    order.ProductName,
-                    PreviousStatus = previousStatus,
-                    NewStatus = newStatus,
-                    UpdatedDate = DateTime.UtcNow,
-                    UpdatedBy = "System"
-                };
-                await _storageService.SendMessageAsync("order-notifications", JsonSerializer.Serialize(statusMessage));
-
-                return Json(new { success = true, message = $"Order status updated to {newStatus}" });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = ex.Message });
-            }
-        }
+        
 
         private async Task PopulateDropdowns(OrderCreateViewModel model)
         {

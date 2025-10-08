@@ -28,5 +28,6 @@ namespace ABCRetailers.Models.ViewModels
 
         public List<Customer> Customers { get; set; } = new();
         public List<Product> Products { get; set; } = new();
+
     }
 }

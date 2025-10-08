@@ -4,6 +4,10 @@
       "restored": true,
       "restoreTime": "2025-09-16T09:14:43.8954545Z"
     },
+    "compute1": {
+      "restored": true,
+      "restoreTime": "2025-10-08T14:47:07.29213Z"
+    },
     "secrets1": {
       "restored": true,
       "restoreTime": "2025-09-15T19:43:24.74523Z"
@@ -12,6 +16,16 @@
   "parameters": {
     "compute.appService1.subscriptionId": {
       "Name": "compute.appService1.subscriptionId",
+      "Type": "subscription",
+      "Value": "e31273bf-0dae-4395-a8b5-33f801de7c65"
+    },
+    "compute1.resourceGroupName": {
+      "Name": "compute1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "AZ-JHB-RSG-IIEMSA-ST10404431-TER"
+    },
+    "compute1.subscriptionId": {
+      "Name": "compute1.subscriptionId",
       "Type": "subscription",
       "Value": "e31273bf-0dae-4395-a8b5-33f801de7c65"
     },

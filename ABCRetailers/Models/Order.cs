@@ -1,19 +1,27 @@
 ﻿using Azure;
 using Azure.Data.Tables;
 using System;
+
 using System.ComponentModel.DataAnnotations;
 
 namespace ABCRetailers.Models
 {
-    public class Order : ITableEntity
+    public enum OrderStatus
+    {
+        Submitted,   // First created
+        Processing,  // Reviewed by company
+        Completed,   // Delivered to customer
+        Cancelled    // Cancelled by company
+    }
+    public partial class Order : ITableEntity
     {
         public string PartitionKey { get; set; } = "Order";
         public string RowKey { get; set; } = Guid.NewGuid().ToString();
-        public DateTimeOffset? Timestamp { get; set; }
+
         public ETag ETag { get; set; }
 
         [Display(Name = "Order ID")]
-        public string OrderID=> RowKey;
+        public string OrderID { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "Customer")]
@@ -34,7 +42,7 @@ namespace ABCRetailers.Models
         [Required]
         [Display(Name = "Order Date")]
         [DataType(DataType.Date)]
-        public DateTime OrderDate { get; set; } = DateTime.Today;
+        public DateTimeOffset? OrderDate { get; set; } = DateTime.Today;
 
         [Required]
         [Display(Name = "Quantity")]
@@ -49,20 +57,16 @@ namespace ABCRetailers.Models
         [DataType(DataType.Currency)]
         public decimal TotalPrice { get; set; }
 
-        [Required]
-        [Display(Name = "Status")]
-        public string Status { get; set; } = "Submitted";
+       
+       
 
         [Required]
         [Display(Name = "Payment Method")]
         public string Payment { get; set; } = "Submitted";
 
-        public enum OrderStatus
-        {
-            Submitted,   // First created
-            Processing,  // Reviewed by company
-            Completed,   // Delivered to customer
-            Cancelled    // Cancelled by company
-        }
+        [Required]
+        [Display(Name = "Status")]
+        public OrderStatus Status { get; set; } = OrderStatus.Submitted;
+        public DateTimeOffset? Timestamp { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

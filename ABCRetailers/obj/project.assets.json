@@ -7043,11 +7043,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\ABCRetailers.csproj",
+      "projectUniqueName": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ST10404431-CLDV6212-POE\\ABCRetailers\\ABCRetailers.csproj",
       "projectName": "ABCRetailers",
-      "projectPath": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\ABCRetailers.csproj",
+      "projectPath": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ST10404431-CLDV6212-POE\\ABCRetailers\\ABCRetailers.csproj",
       "packagesPath": "C:\\Users\\Arlo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ABCRetailers\\obj\\",
+      "outputPath": "C:\\Users\\Arlo\\OneDrive - ADvTECH Ltd\\Documents\\CLDV6212\\ST10404431-CLDV6212-POE\\ABCRetailers\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

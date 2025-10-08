@@ -1,4 +1,6 @@
 ﻿@model ABCRetailers.Models.Order
+@using ABCRetailers.Models
+
 @{
     ViewData["Title"] = "Order Details";
 }
@@ -35,27 +37,15 @@
                     </div>
                     <div class="col-md-6">
                         <p><strong>Order Date:</strong></p>
-                        <p class="text-muted">@Model.OrderDate.ToString("MMMM dd, yyyy")</p>
+                        <p class="text-muted">@Model.OrderDate.ToString()</p>
 
                         <p><strong>Quantity:</strong></p>
                         <p class="text-muted">@Model.Quantity</p>
 
                         <p><strong>Status:</strong></p>
-                        <p>
-                            @{
-                                string GetStatusBadgeClass(string status) => status?.ToLower() switch
-                                {
-                                    "submitted" => "primary",
-                                    "processing" => "info",
-                                    "completed" => "success",
-                                    "cancelled" => "danger",
-                                    _ => "secondary"
-                                };
-                            }
-                            <span class="badge bg-@(GetStatusBadgeClass(Model.Status)) fs-6">
-                                @Model.Status
-                            </span>
-                        </p>
+                        <span class="badge bg-@(GetStatusBadgeClass(Model.Status)) fs-6">
+                            @Model.Status
+                        </span>
                     </div>
                 </div>
             </div>
@@ -90,7 +80,7 @@
             </div>
             <div class="card-body">
                 <p><strong>Created:</strong></p>
-                <p class="text-muted small">@Model.Timestamp?.ToString("MMM dd, yyyy HH:mm")</p>
+                <p class="text-muted small">@Model.OrderDate?.ToString("MMM dd, yyyy HH:mm")</p>
 
                 <p><strong>Customer ID:</strong></p>
                 <p class="text-muted small">@Model.CustomerID</p>
@@ -101,3 +91,14 @@
         </div>
     </div>
 </div>
+
+@functions {
+    string GetStatusBadgeClass(OrderStatus status) => status.ToString().ToLower() switch
+    {
+        "submitted" => "primary",
+        "processing" => "info",
+        "completed" => "success",
+        "cancelled" => "danger",
+        _ => "secondary"
+    };
+}
